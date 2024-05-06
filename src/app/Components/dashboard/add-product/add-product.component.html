@@ -1,0 +1,278 @@
+<div>
+  <header>
+    <div class="d-flex justify-content-between">
+      <h4>Add New Product :</h4>
+      <a
+        class="btn btn-dark"
+        [routerLink]="['/dashboard/allproducts']"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >All Products</a
+      >
+    </div>
+  </header>
+  <form
+    [formGroup]="formGroup"
+    (submit)="PostProduct()"
+    class="px-5 py-4 bg-white rounded"
+  >
+    <div class="my-1">
+      <label class="mb-1">Product Name*</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Product Name"
+        formControlName="name"
+        name="name"
+        [ngClass]="{ 'input-error': name.errors && name.touched }"
+      />
+      <div class="error-box">
+        <ng-container *ngIf="name.touched">
+          <div *ngIf="name.hasError('required')" class="form-text text-danger">
+            Product Name is Required
+          </div>
+          <div *ngIf="name.hasError('minlength')" class="form-text text-danger">
+            Name must be at least {{ rules.nameMinLength }} charachters
+          </div>
+          <div *ngIf="name.hasError('maxlength')" class="form-text text-danger">
+            Name must be at Most {{ rules.nameMaxLength }} charachters
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="my-1">
+      <label class="mb-1">Product Description*</label>
+      <div class="position-relative">
+        <textarea
+          type="text"
+          class="form-control"
+          placeholder="Enter Product Description"
+          rows="6"
+          maxlength="400"
+          formControlName="description"
+          name="description"
+          [ngClass]="{
+            'input-error': description.errors && description.touched
+          }"
+        ></textarea>
+        <span
+          class="textarea-counter"
+          [ngClass]="{
+            'counter-error': !description.valid && description.touched,
+            'counter-valid': description.valid && description.touched
+          }"
+          >{{ description.value?.length }}/{{
+            rules.descriptionMaxLength
+          }}</span
+        >
+      </div>
+
+      <div class="error-box">
+        <ng-container *ngIf="description.touched">
+          <div
+            *ngIf="description.hasError('required')"
+            class="form-text text-danger"
+          >
+            Product Description is Required
+          </div>
+          <div
+            *ngIf="description.hasError('minlength')"
+            class="form-text text-danger"
+          >
+            Description must be at least
+            {{ rules.descriptionMinLength }} charachters
+          </div>
+          <div
+            *ngIf="description.hasError('maxlength')"
+            class="form-text text-danger"
+          >
+            Description must be at Most
+            {{ rules.descriptionMaxLength }} charachters
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="d-flex gap-3">
+      <div class="my-1 w-50">
+        <label class="mb-1">Type*</label>
+        <select
+          class="form-select"
+          formControlName="typeId"
+          name="typeId"
+          [ngClass]="{ 'input-error': typeId.errors && typeId.touched }"
+        >
+          <option [value]="0">--select Type--</option>
+          <option *ngFor="let type of types" [value]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+        <div class="error-box">
+          <ng-container *ngIf="typeId.touched">
+            <div
+              *ngIf="typeId.hasError('required') || typeId.hasError('min')"
+              class="form-text text-danger"
+            >
+              Product Type is Required
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="my-1 w-50">
+        <label class="mb-1">Category*</label>
+        <select
+          class="form-select"
+          formControlName="categoryId"
+          name="categoryId"
+          [ngClass]="{ 'input-error': categoryId.errors && categoryId.touched }"
+        >
+          <option [value]="0">--select category--</option>
+          <option *ngFor="let cat of categories" [value]="cat.id">
+            {{ cat.name }}
+          </option>
+        </select>
+        <div class="error-box">
+          <ng-container *ngIf="categoryId.touched">
+            <div
+              *ngIf="
+                categoryId.hasError('required') || categoryId.hasError('min')
+              "
+              class="form-text text-danger"
+            >
+              Product Category is Required
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex gap-3">
+      <div class="my-1 w-50">
+        <label class="mb-1">Product Price*</label>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input
+            min="1"
+            type="number"
+            class="form-control"
+            placeholder="Enter Product Price"
+            formControlName="price"
+            name="price"
+            [ngClass]="{ 'input-error': price.errors && price.touched }"
+          />
+        </div>
+        <div class="error-box">
+          <ng-container *ngIf="price.touched">
+            <div
+              *ngIf="price.hasError('required')"
+              class="form-text text-danger"
+            >
+              Product price is Required
+            </div>
+            <div *ngIf="price.hasError('max')" class="form-text text-danger">
+              Price must not be bigger than
+              {{ rules.priceMax | currency }}
+            </div>
+            <div *ngIf="price.hasError('min')" class="form-text text-danger">
+              Price must not be less than
+              {{ rules.priceMin | currency }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="my-1 w-50">
+        <label class="mb-1"
+          >Product Sale <span class="optional">(optional)</span></label
+        >
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Enter Product Sale %"
+          formControlName="sale"
+          name="sale"
+          min="1"
+          [ngClass]="{ 'input-error': sale.errors && sale.touched }"
+        />
+        <div class="error-box">
+          <ng-container *ngIf="sale.touched">
+            <div *ngIf="sale.hasError('max')" class="form-text text-danger">
+              Price must not be bigger than
+              {{ rules.priceMax }}%
+            </div>
+            <div *ngIf="sale.hasError('min')" class="form-text text-danger">
+              Price must not be less than
+              {{ rules.saleMin }}%
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-1">
+      <label class="mb-1">Product Stock*</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Enter Product Stock"
+        formControlName="stock"
+        name="stock"
+        min="1"
+        [ngClass]="{ 'input-error': stock.errors && stock.touched }"
+      />
+      <div class="error-box">
+        <ng-container *ngIf="stock.touched">
+          <div *ngIf="stock.hasError('required')" class="form-text text-danger">
+            Product stock is Required
+          </div>
+          <div *ngIf="stock.hasError('max')" class="form-text text-danger">
+            Product stock must not be bigger than
+            {{ rules.stockMax }}
+          </div>
+          <div *ngIf="stock.hasError('min')" class="form-text text-danger">
+            Product stock must not be less than
+            {{ rules.stockMin }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="my-1">
+      <label class="mb-1">Product Image*</label>
+      <input
+        type="file"
+        class="form-control file"
+        accept=".jpg,.jpeg,.png"
+        (change)="onImgSelected($event)"
+        name="image"
+        formControlName="image"
+        [ngClass]="{ 'input-error': image.errors && image.touched }"
+      />
+      <div class="preview-img" *ngIf="imageSrc">
+        <div (click)="deleteSelectedImage()" class="delete-btn">
+          <i class="bi bi-x-circle-fill"></i>
+        </div>
+        <img [src]="imageSrc" alt="Image Preview" />
+      </div>
+
+      <div class="error-box">
+        <ng-container *ngIf="showImageRequiredError">
+          <div *ngIf="image.hasError('required')" class="form-text text-danger">
+            Product image is Required
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-1 my-3">
+      <a *ngIf="productId != 0" class="btn btn-danger px-4">Discard</a>
+      <a
+        *ngIf="productId == 0"
+        class="btn btn-danger px-4"
+        (click)="clearForm()"
+        >Clear</a
+      >
+      <button type="submit" class="btn btn-success px-4">
+        @if(productId==0){ Add }@else{ Save Changes }
+      </button>
+    </div>
+  </form>
+
+  <!-- <div>{{ formGroup.value | json }}</div> -->
+</div>

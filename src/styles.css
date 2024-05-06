@@ -1,0 +1,9 @@
+:root {
+  --primary-color: rgb(37, 158, 239);
+  --input-border-color: rgba(68, 174, 255, 0.558);
+  --input-placeholder-color: rgb(182, 182, 182);
+}
+body {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+}

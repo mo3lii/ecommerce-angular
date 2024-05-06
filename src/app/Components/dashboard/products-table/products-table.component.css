@@ -1,0 +1,58 @@
+header {
+  padding: 12px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 5px 4px 5px 0px #00000008;
+  margin: 0 0 16px;
+  background-color: white;
+}
+
+table {
+  border: 1px solid rgb(202, 202, 202);
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+td {
+  vertical-align: middle;
+  border-left: 1px solid rgb(202, 202, 202);
+  border-right: 1px solid rgb(202, 202, 202);
+}
+th {
+  background-color: black;
+  color: white;
+}
+
+.current-page-input {
+  height: 30px;
+  padding: 0 6px;
+  width: 50px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.page-change-btn {
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  padding: 0 6px;
+  height: 30px;
+}
+.page-change-btn:disabled {
+  background-color: rgb(133, 169, 222);
+}
+.page-controller {
+  width: 100%;
+  background-color: white;
+  padding: 20px 0;
+}
+
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

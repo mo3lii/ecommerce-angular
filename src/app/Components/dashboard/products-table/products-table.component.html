@@ -1,0 +1,86 @@
+<div class="p-3 bg-white">
+  <div class="page-controller d-flex justify-content-between">
+    <div>
+      Page
+      <button
+        (click)="decreasePageNum()"
+        [disabled]="isPrevDisabled()"
+        class="page-change-btn"
+      >
+        &lt;&lt;
+      </button>
+      <input
+        class="current-page-input no-arrows"
+        type="number"
+        [(ngModel)]="currentPageNum"
+        (change)="changePage()"
+        [max]="totalPages"
+        min="1"
+      />
+      <button
+        (click)="increasePageNum()"
+        [disabled]="isNextDisabled()"
+        class="page-change-btn"
+      >
+        &gt;&gt;
+      </button>
+
+      of {{ totalPages }}
+    </div>
+    <a
+      class="btn btn-success text-light"
+      [routerLink]="['/dashboard/addproduct']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Add Product</a
+    >
+  </div>
+  <div class="w-100">
+    <table class="table table-hover overflow-scroll">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">category</th>
+          <th scope="col">Image</th>
+          <th scope="col">price</th>
+          <th scope="col">sale</th>
+          <th scope="col">stock</th>
+          <th scope="col">Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (prod of products; track $index) {
+        <tr>
+          <td scope="row">{{ prod.id }}</td>
+          <td>{{ prod.name | truncatePipe : 20 }}</td>
+          <td>{{ prod.type }}</td>
+          <td>{{ prod.category }}</td>
+          <td>
+            <img
+              [src]="
+                prod.imageURL
+                  ? prod.imageURL
+                  : '/src/assets/images/product-default-image.jpg'
+              "
+            />
+          </td>
+          <td>{{ prod.price | currency }}</td>
+          <td>{{ prod.sale ? prod.sale + " %" : "-" }}</td>
+          <td>{{ prod.stock }}</td>
+          <td>{{ prod.dateCreated | date : "dd/MM/yyyy" }}</td>
+          <td>
+            <a
+              class="btn btn-info"
+              [routerLink]="['/dashboard/product', prod.id, 'edit']"
+              >edit</a
+            >
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

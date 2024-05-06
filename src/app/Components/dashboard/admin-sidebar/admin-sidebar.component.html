@@ -1,0 +1,28 @@
+<H1>Logo</H1>
+<hr />
+<ul>
+  <li>
+    <a
+      [routerLink]="['/']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ><i class="bi bi-house-door"></i>Home</a
+    >
+  </li>
+  <li>
+    <a
+      [routerLink]="['/dashboard/allproducts']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ><i class="bi bi-shop-window"></i>All Products</a
+    >
+  </li>
+  <li>
+    <a
+      [routerLink]="['/dashboard/product/0/edit']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ><i class="bi bi-bag-plus"></i>Add Product</a
+    >
+  </li>
+</ul>
