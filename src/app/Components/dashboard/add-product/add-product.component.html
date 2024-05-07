@@ -254,7 +254,10 @@
 
       <div class="error-box">
         <ng-container *ngIf="showImageRequiredError">
-          <div *ngIf="image.hasError('required')" class="form-text text-danger">
+          <div
+            *ngIf="productId == 0 && selectedFile == undefined"
+            class="form-text text-danger"
+          >
             Product image is Required
           </div>
         </ng-container>

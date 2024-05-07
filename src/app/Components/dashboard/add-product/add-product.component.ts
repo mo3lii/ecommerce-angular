@@ -38,16 +38,7 @@ import { IproductEdit } from '../../../models/iproduct-edit';
 })
 export class AddProductComponent implements OnInit {
   product?: IproductEdit;
-  // = {
-  //   name: '',
-  //   typeId: 0,
-  //   categoryId: 0,
-  //   description: '',
-  //   price: 0,
-  //   sale: 0,
-  //   stock: 0,
-  //   image: '/assets/images/product-default-image.jpg',
-  // };
+
   productId: number = 0;
   categories: ICategory[] = [];
   types: IType[] = [];
@@ -115,9 +106,9 @@ export class AddProductComponent implements OnInit {
       Validators.min(1),
       Validators.max(99999),
     ]),
-    image: new FormControl('', [Validators.required]),
+    image: new FormControl('', []),
   });
-  selectedFile: File | null = null;
+  selectedFile: File | undefined = undefined;
 
   get name() {
     return this.formGroup.controls.name;
@@ -144,26 +135,54 @@ export class AddProductComponent implements OnInit {
     return this.formGroup.controls.image;
   }
   PostProduct() {
-    if (this.formGroup.valid && this.selectedFile) {
-      this.showImageRequiredError = false;
-      var product = {
-        name: this.name.value,
-        typeId: this.typeId.value,
-        categoryId: this.categoryId.value,
-        description: this.description.value,
-        price: this.price.value,
-        sale: this.sale.value,
-        stock: this.stock.value,
-      };
-      this.productService.add(product, this.selectedFile).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.router.navigate(['/dashboard/allproducts']);
-        },
-        error: (error) => {
-          console.log('error adding product:', error);
-        },
-      });
+    if (this.formGroup.valid) {
+      if (this.productId == 0 && this.selectedFile) {
+        this.showImageRequiredError = false;
+        var product = {
+          name: this.name.value,
+          typeId: this.typeId.value,
+          categoryId: this.categoryId.value,
+          description: this.description.value,
+          price: this.price.value,
+          sale: this.sale.value,
+          stock: this.stock.value,
+        };
+        this.productService.add(product, this.selectedFile).subscribe({
+          next: (data) => {
+            console.log(data);
+            this.router.navigate(['/dashboard/allproducts']);
+          },
+          error: (error) => {
+            console.log('error adding product:', error);
+          },
+        });
+      } else if (this.productId != 0) {
+        this.showImageRequiredError = false;
+        var updatedProduct = {
+          name: this.name.value,
+          typeId: this.typeId.value,
+          categoryId: this.categoryId.value,
+          description: this.description.value,
+          price: this.price.value,
+          sale: this.sale.value,
+          stock: this.stock.value,
+        };
+        this.productService
+          .update(
+            this.productId,
+            updatedProduct,
+            this.selectedFile ?? undefined
+          )
+          .subscribe({
+            next: (data) => {
+              console.log('updated :', data);
+              this.router.navigate(['/dashboard/allproducts']);
+            },
+            error: (error) => {
+              console.log('error updating product:', error);
+            },
+          });
+      }
     } else {
       this.formGroup.markAllAsTouched();
       this.showImageRequiredError = true;
@@ -185,7 +204,7 @@ export class AddProductComponent implements OnInit {
       stock: null,
       sale: null,
     });
-    this.selectedFile = null;
+    this.selectedFile = undefined;
     // this.productForm.resetForm(); // Reset the form after successful submission
   }
 
@@ -203,6 +222,7 @@ export class AddProductComponent implements OnInit {
         // Safely assert that `e.target` is not null with an if-check
         if (e.target) {
           this.imageSrc = e.target.result; // This is the base64 encoded string
+          this.selectedFile = file;
         }
       };
 
@@ -211,7 +231,7 @@ export class AddProductComponent implements OnInit {
   }
   deleteSelectedImage() {
     this.showImageRequiredError = false;
-    this.selectedFile = null;
+    this.selectedFile = undefined;
     this.imageSrc = null;
     this.image.setValue('');
   }

@@ -61,4 +61,15 @@ export class ProductsTableComponent implements OnInit {
   isNextDisabled() {
     return this.currentPageNum == this.totalPages;
   }
+  deleteProduct(id: number) {
+    this.apiService.delete(id).subscribe({
+      next: () => {
+        console.log('deleted successfully');
+        this.getproducts(this.currentPageNum);
+      },
+      error: () => {
+        console.log('deleting error');
+      },
+    });
+  }
 }

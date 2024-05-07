@@ -37,4 +37,24 @@ export class ProductDashboardService {
 
     return this.client.post(this.baseURL, formData);
   }
+  update(id: number, product: any, file?: File) {
+    const formData = new FormData();
+    formData.append('Name', product.name);
+    formData.append('TypeId', product.typeId.toString());
+    formData.append('CategoryId', product.categoryId.toString());
+    formData.append('Description', product.description);
+    formData.append('Price', product.price.toString());
+    if (product.sale !== null && product.sale !== undefined) {
+      formData.append('Sale', product.sale.toString());
+    }
+    formData.append('Stock', product.stock.toString());
+    if (file != undefined) {
+      formData.append('Image', file, file.name);
+    }
+
+    return this.client.put(`${this.baseURL}/${id}`, formData);
+  }
+  delete(id: number) {
+    return this.client.delete(`${this.baseURL}/${id}`);
+  }
 }
