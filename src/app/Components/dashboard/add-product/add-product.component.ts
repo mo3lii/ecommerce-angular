@@ -68,7 +68,7 @@ export class AddProductComponent implements OnInit {
           this.name.setValue(this.product.name);
           this.description.setValue(this.product.description);
           this.categoryId.setValue(this.product.categoryId);
-          this.typeId.setValue(this.product.categoryId);
+          this.typeId.setValue(this.product.typeId);
           this.price.setValue(this.product.price);
           this.sale.setValue(
             this.product.sale == null ? null : this.product.sale
@@ -100,7 +100,7 @@ export class AddProductComponent implements OnInit {
       Validators.min(1),
       Validators.max(99999),
     ]),
-    sale: new FormControl(0, [Validators.min(1), Validators.max(99999)]),
+    sale: new FormControl(0, [Validators.min(1), Validators.max(100)]),
     stock: new FormControl(0, [
       Validators.required,
       Validators.min(1),

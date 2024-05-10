@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <form
+        [formGroup]="categoryForm"
+        (submit)="handleCategory()"
+        class="px-5 py-4 bg-white rounded"
+      >
+        <div class="my-1">
+          <label class="mb-1">Category Name*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Category Name"
+            formControlName="name"
+            name="name"
+            [ngClass]="{ 'input-error': name.errors && name.touched }"
+          />
+          <div class="error-box">
+            <ng-container *ngIf="name.touched">
+              <div
+                *ngIf="name.hasError('required')"
+                class="form-text text-danger"
+              >
+                Product Name is Required
+              </div>
+              <div
+                *ngIf="name.hasError('minlength')"
+                class="form-text text-danger"
+              >
+                Name must be at least {{ rules.nameMinLength }} charachters
+              </div>
+              <div
+                *ngIf="name.hasError('maxlength')"
+                class="form-text text-danger"
+              >
+                Name must be at Most {{ rules.nameMaxLength }} charachters
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="my-1">
+          <label class="mb-1">Category Description*</label>
+          <textarea
+            type="text"
+            class="form-control"
+            placeholder="Enter Category Name"
+            formControlName="description"
+            name="description"
+            rows="4"
+            [ngClass]="{
+              'input-error': description.errors && description.touched
+            }"
+          ></textarea>
+          <div class="error-box">
+            <ng-container *ngIf="description.touched">
+              <div
+                *ngIf="description.hasError('required')"
+                class="form-text text-danger"
+              >
+                Category Description is Required
+              </div>
+              <div
+                *ngIf="description.hasError('minlength')"
+                class="form-text text-danger"
+              >
+                Description must be at least
+                {{ rules.nameMinLength }} charachters
+              </div>
+              <div
+                *ngIf="description.hasError('maxlength')"
+                class="form-text text-danger"
+              >
+                description must be at Most
+                {{ rules.nameMaxLength }} charachters
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-1 my-3">
+          <a
+            *ngIf="currentCategory"
+            (click)="discardChanges()"
+            class="btn btn-danger px-4"
+            >Discard</a
+          >
+          <a
+            *ngIf="!currentCategory"
+            class="btn btn-danger px-4"
+            (click)="clearForm()"
+            >Clear</a
+          >
+          <button type="submit" class="btn btn-success px-4">
+            @if(currentCategory){Save Changes}@else{Add}
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-6 bg-white p-0">
+      <table class="table table-hover overflow-scroll w-100">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Products</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of categoryList; track $index) {
+          <tr class="">
+            <td scope="row">{{ category.id }}</td>
+            <td class="fw-bold">{{ category.name }}</td>
+            <td>{{ category.description | truncatePipe : 20 }}</td>
+            <td>{{ category.productsCount }}</td>
+            <td>
+              <div
+                class="d-flex justify-content-center align-items-center gap-2"
+              >
+                <i
+                  (click)="onRowSelected(category)"
+                  class="row-controller text-info bi bi-pencil-square"
+                ></i>
+                <i
+                  (click)="onDeleteCategory(category)"
+                  class="row-controller text-danger bi bi-trash3"
+                ></i>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

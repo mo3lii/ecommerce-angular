@@ -1,9 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductRules {
+export class CategoryRules {
   nameMaxLength: number = 50;
   nameMinLength: number = 10;
   descriptionMaxLength: number = 400;

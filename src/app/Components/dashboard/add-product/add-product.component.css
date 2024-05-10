@@ -77,9 +77,6 @@ textarea {
   color: green;
 }
 
-textarea {
-}
-
 input::placeholder,
 textarea::placeholder {
   color: --var(--input-placeholder-color);

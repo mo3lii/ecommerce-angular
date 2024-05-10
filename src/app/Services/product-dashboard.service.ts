@@ -40,8 +40,8 @@ export class ProductDashboardService {
   update(id: number, product: any, file?: File) {
     const formData = new FormData();
     formData.append('Name', product.name);
-    formData.append('TypeId', product.typeId.toString());
-    formData.append('CategoryId', product.categoryId.toString());
+    formData.append('TypeId', product.typeId);
+    formData.append('CategoryId', product.categoryId);
     formData.append('Description', product.description);
     formData.append('Price', product.price.toString());
     if (product.sale !== null && product.sale !== undefined) {

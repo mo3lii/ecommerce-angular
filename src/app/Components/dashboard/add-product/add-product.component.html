@@ -196,7 +196,7 @@
           <ng-container *ngIf="sale.touched">
             <div *ngIf="sale.hasError('max')" class="form-text text-danger">
               Price must not be bigger than
-              {{ rules.priceMax }}%
+              {{ rules.saleMax }}%
             </div>
             <div *ngIf="sale.hasError('min')" class="form-text text-danger">
               Price must not be less than

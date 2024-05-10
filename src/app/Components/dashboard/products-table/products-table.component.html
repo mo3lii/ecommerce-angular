@@ -1,4 +1,4 @@
-<div class="p-3 bg-white">
+<div class="p-3 bg-white rounded">
   <div class="page-controller d-flex justify-content-between">
     <div>
       Page
@@ -29,7 +29,7 @@
     </div>
     <a
       class="btn btn-success text-light"
-      [routerLink]="['/dashboard/addproduct']"
+      [routerLink]="['/dashboard/product/0/edit']"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       >Add Product</a
@@ -55,7 +55,7 @@
         @for (prod of products; track $index) {
         <tr>
           <td scope="row">{{ prod.id }}</td>
-          <td>{{ prod.name | truncatePipe : 20 }}</td>
+          <td class="fw-bold">{{ prod.name | truncatePipe : 20 }}</td>
           <td>{{ prod.type }}</td>
           <td>{{ prod.category }}</td>
           <td>

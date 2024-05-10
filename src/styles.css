@@ -7,3 +7,34 @@ body {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
 }
+
+.error-box {
+  height: 20px;
+}
+
+.input-error {
+  border: 1px solid red !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  border: 2px solid var(--input-border-color);
+}
+
+.form-control,
+.form-select {
+  border: 1px solid rgb(201, 201, 201);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: --var(--input-placeholder-color);
+}
+
+textarea {
+  resize: none;
+}
+.row-controller {
+  cursor: pointer;
+}
