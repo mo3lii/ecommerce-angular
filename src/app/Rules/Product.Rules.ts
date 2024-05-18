@@ -14,5 +14,5 @@ export class ProductRules {
   priceMax: number = 99999;
   saleMin: number = 1;
   saleMax: number = 100;
-  productTablePageSize = 5;
+  productTablePageSize = 8;
 }

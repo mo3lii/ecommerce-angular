@@ -1,0 +1,9 @@
+div span {
+  font-size: 2rem;
+  font-family: "Titan One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+div span:last-child {
+  color: var(--primary-color);
+}

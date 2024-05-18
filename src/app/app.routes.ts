@@ -4,11 +4,51 @@ import { ProductsTableComponent } from './Components/dashboard/products-table/pr
 import { AdminHomeComponent } from './Components/dashboard/admin-home/admin-home.component';
 import { AddProductComponent } from './Components/dashboard/add-product/add-product.component';
 import { CategoryTableComponent } from './Components/dashboard/category-table/category-table.component';
+import { AdminLoginComponent } from './Components/dashboard/admin-login/admin-login.component';
+import { adiminAuthGuard } from './Gaurds/adimin-auth.guard';
+import { LayoutComponent } from './Components/main/layout/layout.component';
+import { HomeProductsComponent } from './Components/main/home-products/home-products.component';
+import { UserLoginComponent } from './Components/main/user-login/user-login.component';
+import { CartComponent } from './Components/main/cart/cart.component';
 
 export const routes: Routes = [
-  { path: '', component: AdminHomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/allproducts', component: ProductsTableComponent },
-  { path: 'dashboard/product/:id/edit', component: AddProductComponent },
-  { path: 'dashboard/category', component: CategoryTableComponent },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'home', component: HomeProductsComponent },
+      { path: 'cart', component: CartComponent },
+    ],
+  },
+  {
+    path: 'admin/login',
+    component: AdminLoginComponent,
+  },
+  {
+    path: 'user/login',
+    component: UserLoginComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [adiminAuthGuard],
+    children: [
+      {
+        path: 'home',
+        component: AdminHomeComponent,
+      },
+      {
+        path: 'allproducts',
+        component: ProductsTableComponent,
+      },
+      {
+        path: 'product/:id/edit',
+        component: AddProductComponent,
+      },
+      {
+        path: 'category',
+        component: CategoryTableComponent,
+      },
+    ],
+  },
 ];

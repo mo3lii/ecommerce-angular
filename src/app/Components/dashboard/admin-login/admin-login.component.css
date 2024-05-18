@@ -1,0 +1,28 @@
+.login-card {
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 1px 3px 7px 2px #0000002c;
+  width: 300px;
+  background-color: white;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-color);
+}
+
+input[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+i {
+  margin-left: -30px;
+  font-size: 18px;
+}
+i::before {
+  cursor: pointer;
+}

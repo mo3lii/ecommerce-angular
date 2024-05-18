@@ -1,0 +1,89 @@
+<div class="container" style="min-height: 80vh">
+  <div class="row d-flex justify-content-center align-items-start pt-4">
+    <div class="col-9 prod-container">
+      @for (prod of cartProdList; track $index) {
+      <div class="prod-card">
+        <i class="delete-btn bi bi-x-lg"></i>
+        <div class="img-container">
+          <img [src]="prod.imageURL" alt="" />
+        </div>
+        <div class="card-content">
+          <p class="product-title">{{ prod.name | truncatePipe : 50 }}</p>
+          <p class="product-description">
+            {{ prod.description | truncatePipe : 50 }}
+          </p>
+
+          <div class="d-flex">
+            <div class="quantity">
+              <button (click)="decreaseQty(qty)">-</button>
+              <input
+                #qty
+                class="no-arrows"
+                type="number"
+                [value]="prod.quantity"
+                (change)="updateProductQuantity(prod.productId, $event)"
+                [min]="0"
+              />
+              <button (click)="increaseQty(qty)">+</button>
+            </div>
+            <div
+              class=""
+              [ngClass]="{
+                'in-stock': prod.stock >= prod.quantity,
+                'out-of-stock': prod.stock < prod.quantity
+              }"
+            >
+              {{ prod.stock >= prod.quantity ? "In Stock" : "Out of Stock" }}
+            </div>
+            <div
+              class="sale-badge"
+              *ngIf="prod.sale && prod.stock >= prod.quantity"
+            >
+              -{{ prod.sale }}%
+            </div>
+          </div>
+        </div>
+        <!-- <div class="product-price">{{ prod.price | currency }}</div> -->
+        <div class="">
+          <p *ngIf="prod.stock < prod.quantity" class="product-price me-2">
+            {{ prod.price | currency }}
+          </p>
+          <p
+            class="product-price me-2"
+            *ngIf="prod?.sale && prod.stock >= prod.quantity"
+          >
+            {{
+              (prod?.price || 0) -
+                ((prod?.price || 0) * (prod?.sale || 0)) / 100 | currency
+            }}
+          </p>
+          <p
+            *ngIf="prod.stock >= prod.quantity"
+            class="product-price me-2"
+            [ngClass]="{ 'old-price': prod?.sale }"
+          >
+            {{ prod?.price | currency }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="col-3 cart-sidebar">
+      <div class="cart-summary">
+        <h3 class="text-muted fw-bold">Cart Summary</h3>
+        @for (prod of cartProdList; track $index) {
+        <p class="text-muted">
+          {{ prod.quantity }} *
+          {{ (prod.sale ? prod.priceAfterSale : prod.price) | currency }}
+        </p>
+        }
+        <hr />
+        <p>Sub Total ({{ cartItemsCount }} items) :</p>
+        <h3 class="text-muted">{{ cartSubtotal | currency }}</h3>
+        <button class="continue-btn mt-3">
+          Proceed To Buy <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

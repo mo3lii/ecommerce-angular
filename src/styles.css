@@ -1,6 +1,8 @@
 :root {
-  --primary-color: rgb(37, 158, 239);
-  --input-border-color: rgba(68, 174, 255, 0.558);
+  --primary-color: rgb(246, 100, 3);
+  --primary-color-disabled: rgb(243, 146, 67);
+  --text-dark-gray: rgb(134, 134, 134);
+  --input-border-color: rgba(37, 37, 37, 0.558);
   --input-placeholder-color: rgb(182, 182, 182);
 }
 body {
