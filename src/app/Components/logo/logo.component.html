@@ -4,7 +4,11 @@
   href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap"
   rel="stylesheet"
 />
-<div>
+<div
+  [routerLink]="['home']"
+  [routerLinkActive]="'active'"
+  [routerLinkActiveOptions]="{ exact: true }"
+>
   <span>Tech</span>
   <span> Store</span>
 </div>

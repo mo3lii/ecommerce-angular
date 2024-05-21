@@ -1,3 +1,7 @@
+.main-container {
+  min-height: 100vh;
+  padding-top: 30px;
+}
 .product-card {
   width: 100%;
   background-color: white;
@@ -11,18 +15,18 @@
 
 .img-container {
   width: 100%;
-  height: 250px;
+  height: 400px;
   /* padding: 32px; */
   /* border: 1px solid gray; */
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 8px;
-  cursor: pointer;
+  padding: 0 20px;
 }
 
 .img-container img {
-  max-width: 100%;
+  width: 100%;
   max-height: 100%;
   /* width: 100%;
   height: 100%;
@@ -32,42 +36,31 @@
 
 .product-title {
   font-weight: bold;
-  max-lines: 1;
-  font-size: 1.1rem;
-}
-.product-title:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  max-lines: 2;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 .product-description {
   color: var(--text-dark-gray);
-  font-size: 1rem;
-  height: 44px;
+  font-size: 1.1rem;
+  line-height: 1.4;
 }
 
-.sale-badge {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 6px;
-  position: absolute;
-  right: 14px;
-  top: -10px;
-  text-align: center;
-  padding: 34px 6px 10px;
-  font-weight: 500;
-  min-width: 55px;
-  border-radius: 4px;
-  /* box-shadow: 2px 2px 4px 1px rgba(180, 180, 180, 0.399); */
-}
 .product-price {
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.9rem;
+}
+.buy-now-btn {
+  border: 2px solid var(--primary-color);
+  font-weight: bold;
+  color: var(--primary-color);
 }
 .add-to-cart-btn {
   background-color: var(--primary-color);
   font-weight: bold;
   color: white;
 }
+
 .added-to-cart {
   background-color: rgb(0, 0, 0);
   font-weight: bold;
@@ -121,4 +114,44 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.sale-badge {
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: green;
+}
+.in-stock,
+.out-of-stock {
+  padding: 1px 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.in-stock {
+  color: green;
+  background-color: #d1e7dd;
+}
+
+.out-of-stock {
+  color: red;
+  background-color: #f8d7da;
+}
+
+.products-section {
+  /* background-color: rgb(250, 250, 250); */
+  padding: 0 0 40px;
+  width: 100%;
+}
+
+#products-container {
+  padding: 20px 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  width: 100%;
+  gap: 20px;
+}
+td {
+  padding: 3px;
 }

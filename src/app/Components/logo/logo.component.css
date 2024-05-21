@@ -7,3 +7,7 @@ div span {
 div span:last-child {
   color: var(--primary-color);
 }
+
+:host {
+  cursor: pointer;
+}

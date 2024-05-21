@@ -10,6 +10,7 @@ import { LayoutComponent } from './Components/main/layout/layout.component';
 import { HomeProductsComponent } from './Components/main/home-products/home-products.component';
 import { UserLoginComponent } from './Components/main/user-login/user-login.component';
 import { CartComponent } from './Components/main/cart/cart.component';
+import { ProductDetailsComponent } from './Components/main/product-details/product-details.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,10 @@ export const routes: Routes = [
     children: [
       { path: 'home', component: HomeProductsComponent },
       { path: 'cart', component: CartComponent },
+      {
+        path: 'product/:id',
+        component: ProductDetailsComponent,
+      },
     ],
   },
   {

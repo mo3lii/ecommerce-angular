@@ -4,11 +4,12 @@ import { ProductDashboardService } from '../../../Services/product-dashboard.ser
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import { SliderComponent } from '../slider/slider.component';
 
 @Component({
   selector: 'app-home-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductCardComponent],
+  imports: [CommonModule, FormsModule, ProductCardComponent, SliderComponent],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css',
 })

@@ -1,18 +1,35 @@
 import { ProductRules } from './../Rules/Product.Rules';
 import { IProduct } from './../models/iproduct';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IproductPage } from '../models/iproduct-page';
 import { IproductEdit } from '../models/iproduct-edit';
+import { UserAuthService } from './user-auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductDashboardService {
   baseURL: string = 'http://localhost:5174/api/product';
-  constructor(private client: HttpClient, private rules: ProductRules) {}
+  constructor(
+    private client: HttpClient,
+    private rules: ProductRules,
+    private userAuth: UserAuthService
+  ) {}
   getPage(pageNumber: number): Observable<IproductPage> {
+    if (this.userAuth.isLoggedIn) {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${localStorage.getItem('user-token')}`
+      );
+      return this.client.get<IproductPage>(
+        `${this.baseURL}/byuser?page=${pageNumber}&pagesize=${this.rules.productTablePageSize}`,
+        {
+          headers,
+        }
+      );
+    }
     return this.client.get<IproductPage>(
       `${this.baseURL}?page=${pageNumber}&pagesize=${this.rules.productTablePageSize}`
     );

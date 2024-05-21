@@ -9,4 +9,5 @@ export interface IProduct {
   sale?: number;
   stock: number;
   dateCreated: Date;
+  isAddedToCart: boolean;
 }

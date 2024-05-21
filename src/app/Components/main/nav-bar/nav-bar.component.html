@@ -1,0 +1,26 @@
+<nav class="first-navbar navbar">
+  <div class="container d-flex justify-content-between align-items-center">
+    <app-logo></app-logo>
+    <div class="d-flex align-items-center">
+      <i class="bi bi-person-circle me-3"></i>
+
+      <i class="bi bi-heart me-3"></i>
+      <div
+        class="position-relative"
+        [routerLink]="['cart']"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <div
+          class="cart-counter"
+          [routerLink]="['cart']"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          {{ cartCount }}
+        </div>
+        <i class="bi bi-bag"></i>
+      </div>
+    </div>
+  </div>
+</nav>

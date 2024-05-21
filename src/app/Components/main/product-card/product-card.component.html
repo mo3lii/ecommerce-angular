@@ -1,9 +1,11 @@
 <div class="product-card">
   <div *ngIf="product?.sale" class="sale-badge">-{{ product?.sale }}%</div>
-  <div class="img-container">
+  <div class="img-container" (click)="navigateToProduct(product?.id)">
     <img [src]="product?.imageURL" alt="" />
   </div>
-  <p class="product-title">{{ product?.name | truncatePipe : 23 }}</p>
+  <p class="product-title" (click)="navigateToProduct(product?.id)">
+    {{ product?.name | truncatePipe : 23 }}
+  </p>
   <p class="product-description">
     {{ product?.description | truncatePipe : 62 }}
   </p>
@@ -22,9 +24,26 @@
       {{ product?.price | currency }}
     </p>
   </div>
-  <div class="buttons d-flex gap-1">
-    <button class="add-to-cart-btn btn w-100">
-      <i class="bi bi-cart-plus me-1"></i> Add To Cart
+  <div *ngIf="showButtons" class="buttons d-flex gap-1">
+    <button
+      [ngClass]="{
+        'added-to-cart': product?.isAddedToCart || isAddedToCart
+      }"
+      class="add-to-cart-btn btn w-100"
+      (click)="addToCart(product?.id)"
+      [disabled]="product?.isAddedToCart || isAddedToCart"
+    >
+      <i
+        class="bi me-1"
+        [ngClass]="{
+          'bi-cart-plus':
+            product?.isAddedToCart == false && isAddedToCart == false,
+          'bi-cart-check':
+            product?.isAddedToCart == true || isAddedToCart == true
+        }"
+      ></i>
+      @if ( product?.isAddedToCart == true || isAddedToCart == true ) { Added To
+      Cart }@else{Add To Cart}
     </button>
     <button class="like-btn btn">
       <i class="bi bi-heart"></i>

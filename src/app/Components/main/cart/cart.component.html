@@ -1,9 +1,9 @@
-<div class="container" style="min-height: 80vh">
+<div class="container" style="min-height: 100vh">
   <div class="row d-flex justify-content-center align-items-start pt-4">
     <div class="col-9 prod-container">
       @for (prod of cartProdList; track $index) {
       <div class="prod-card">
-        <i class="delete-btn bi bi-x-lg"></i>
+        <i (click)="deleteFromCart(prod.id)" class="delete-btn bi bi-x-lg"></i>
         <div class="img-container">
           <img [src]="prod.imageURL" alt="" />
         </div>
@@ -27,7 +27,6 @@
               <button (click)="increaseQty(qty)">+</button>
             </div>
             <div
-              class=""
               [ngClass]="{
                 'in-stock': prod.stock >= prod.quantity,
                 'out-of-stock': prod.stock < prod.quantity
@@ -43,7 +42,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="product-price">{{ prod.price | currency }}</div> -->
         <div class="">
           <p *ngIf="prod.stock < prod.quantity" class="product-price me-2">
             {{ prod.price | currency }}
@@ -66,6 +64,8 @@
           </p>
         </div>
       </div>
+      }@empty {
+      <div class="empty-cart">Your cart is empty! Add some products</div>
       }
     </div>
     <div class="col-3 cart-sidebar">

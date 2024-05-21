@@ -4,6 +4,7 @@ import { CartService } from './../../../Services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { TruncatePipe } from '../../../Pipes/truncate.pipe';
 import { FormsModule } from '@angular/forms';
+import { CartCountService } from '../../../Services/cart-count.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,10 @@ export class CartComponent implements OnInit {
   cartProdList: ICartGet[] = [];
   cartSubtotal: number = 0;
   cartItemsCount: number = 0;
-  constructor(private apiService: CartService) {}
+  constructor(
+    private apiService: CartService,
+    private cartCountService: CartCountService
+  ) {}
   ngOnInit(): void {
     this.getCartProducts();
   }
@@ -66,5 +70,16 @@ export class CartComponent implements OnInit {
       cancelable: true,
     });
     inputElement.dispatchEvent(event);
+  }
+  deleteFromCart(id: number) {
+    this.apiService.deleteProduct(id).subscribe({
+      next: () => {
+        console.log('product ', id, ' deleted');
+      },
+      complete: () => {
+        this.getCartProducts();
+        this.cartCountService.notifyCartUpdate();
+      },
+    });
   }
 }

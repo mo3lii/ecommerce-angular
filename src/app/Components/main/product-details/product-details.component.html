@@ -1,0 +1,100 @@
+<div class="container main-container">
+  <div class="row">
+    <div class="col-6">
+      <div class="img-container">
+        <img [src]="product?.imageURL" alt="" />
+      </div>
+    </div>
+    <div class="col-5 ms-auto">
+      <p class="product-title">{{ product?.name }}</p>
+      <p class="product-description">
+        {{ product?.description }}
+      </p>
+      <div class="my-2">
+        <table>
+          <tr>
+            <td class="fw-bold text-capitalize pe-3">Device Type</td>
+            <td>{{ product?.type }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-capitalize ps-1 pe-3">Device Category</td>
+            <td>{{ product?.category }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-capitalize ps-1 pe-3">Availability</td>
+            <td>
+              <div
+                [ngClass]="{
+                  'in-stock': product?.stock,
+                  'out-of-stock': !product?.stock
+                }"
+              >
+                {{ product?.stock ? "In Stock" : "Out of Stock" }}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <hr />
+      <div class="py-2">
+        <div class="sale-badge" *ngIf="product?.sale">
+          You will save {{ product?.sale }}%
+        </div>
+        <div class="d-flex align-items-center">
+          <p class="product-price me-2" *ngIf="product?.sale">
+            {{
+              (product?.price || 0) -
+                ((product?.price || 0) * (product?.sale || 0)) / 100 | currency
+            }}
+          </p>
+          <p class="product-price" [ngClass]="{ 'old-price': product?.sale }">
+            {{ product?.price | currency }}
+          </p>
+        </div>
+      </div>
+      <div class="buttons gap-1">
+        <button
+          [ngClass]="{
+            'added-to-cart': product?.isAddedToCart || isAddedToCart
+          }"
+          class="add-to-cart-btn btn w-100 mb-2"
+          (click)="addToCart(product?.id)"
+          [disabled]="product?.isAddedToCart || isAddedToCart"
+        >
+          <i
+            class="bi me-1"
+            [ngClass]="{
+              'bi-cart-plus':
+                product?.isAddedToCart == false && isAddedToCart == false,
+              'bi-cart-check':
+                product?.isAddedToCart == true || isAddedToCart == true
+            }"
+          ></i>
+          @if ( product?.isAddedToCart == true || isAddedToCart == true ) {
+          Added To Cart }@else{Add To Cart}
+        </button>
+        <!-- <button class="like-btn btn">
+          <i class="bi bi-heart"></i>
+        </button> -->
+        <button class="buy-now-btn btn w-100">
+          Buy Now <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- -------similar products  -->
+  <hr class="mt-5" />
+  <div *ngIf="products.length > 0" class="products-section">
+    <h2 class="fw-bold w-100">Explore Similar products</h2>
+    <div class="container p-0">
+      <div class="mt-4" id="products-container">
+        @for (product of products; track $index) {
+        <app-product-card
+          [product]="product"
+          [showButtons]="false"
+        ></app-product-card>
+        }
+      </div>
+    </div>
+  </div>
+</div>

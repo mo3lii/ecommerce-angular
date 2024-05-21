@@ -161,3 +161,19 @@ p {
   font-weight: bold;
   padding: 6px 8px;
 }
+
+.empty-cart {
+  text-align: center;
+  vertical-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 214px;
+  width: 100%;
+  background-color: #f4f4f4;
+  border-radius: 12px;
+  font-size: 1.6rem;
+  color: rgb(111, 111, 111);
+  font-weight: bold;
+}
