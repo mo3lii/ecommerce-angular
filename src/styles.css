@@ -11,7 +11,7 @@ body {
 }
 
 .error-box {
-  height: 20px;
+  min-height: 20px;
 }
 
 .input-error {
@@ -39,4 +39,13 @@ textarea {
 }
 .row-controller {
   cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

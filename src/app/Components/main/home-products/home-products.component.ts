@@ -5,11 +5,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { SliderComponent } from '../slider/slider.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-home-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductCardComponent, SliderComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ProductCardComponent,
+    SliderComponent,
+    NgxSkeletonLoaderModule,
+  ],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css',
 })
@@ -18,6 +25,8 @@ export class HomeProductsComponent implements OnInit {
   currentPageNum: number = 1;
   totalPages: number = 1;
   currentProduct?: IProduct;
+  isLoading = true;
+  isFailed = false;
   constructor(public apiService: ProductDashboardService) {
     this.products = [];
   }
@@ -31,8 +40,12 @@ export class HomeProductsComponent implements OnInit {
         this.products = data.products;
         this.currentPageNum = data.currentPage;
         this.totalPages = data.totalPages;
+        this.isLoading = false;
       },
-      error: () => {},
+      error: () => {
+        this.isLoading = false;
+        this.isFailed = true;
+      },
     });
   }
   changePage() {

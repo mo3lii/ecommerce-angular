@@ -2,7 +2,7 @@
   <div class="gradient-overlay"></div>
   <div class="overlay"></div>
   <form class="login-card" [formGroup]="loginForm" (submit)="login()">
-    <H1 class="text-center w-100">Logo</H1>
+    <H1 class="text-center w-100"><app-logo /></H1>
 
     <div class="my-1">
       <label for="email-input" class="mb-1">Email</label>
@@ -55,7 +55,15 @@
       <input class="btn w-100" type="submit" value="Login" />
     </div>
     <div class="my-1 d-flex justify-content-center">
-      <p>Don't have an account? <a href="#">Register</a></p>
+      <p>
+        Don't have an account?
+        <a
+          [routerLink]="['/user/register']"
+          [routerLinkActive]="''"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Register</a
+        >
+      </p>
     </div>
   </form>
 </div>

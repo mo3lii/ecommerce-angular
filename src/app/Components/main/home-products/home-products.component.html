@@ -1,11 +1,48 @@
 <app-slider></app-slider>
 <div class="products-section">
   <div class="container p-0">
+    @if (isFailed) {
+    <div class="error-box">
+      <p class="alert alert-danger text-danger py-5 m-5 w-100">
+        Error Getting Data, try Again.
+      </p>
+    </div>
+    }@else{
     <div class="mt-4" id="products-container">
       @for (product of products; track $index) {
       <app-product-card [product]="product"></app-product-card>
+      }@empty {
+      <div class="item">
+        <ngx-skeleton-loader
+          [theme]="{ height: '400px', width: '100%', 'border-radius': '8px' }"
+          count="1"
+          appearance="circle"
+        />
+      </div>
+      <div class="item">
+        <ngx-skeleton-loader
+          [theme]="{ height: '100%', width: '100%', 'border-radius': '8px' }"
+          count="1"
+          appearance="circle"
+        />
+      </div>
+      <div class="item">
+        <ngx-skeleton-loader
+          [theme]="{ height: '100%', width: '100%', 'border-radius': '8px' }"
+          count="1"
+          appearance="circle"
+        />
+      </div>
+      <div class="item">
+        <ngx-skeleton-loader
+          [theme]="{ height: '100%', width: '100%', 'border-radius': '8px' }"
+          count="1"
+          appearance="circle"
+        />
+      </div>
       }
     </div>
+    }
   </div>
 </div>
 

@@ -1,9 +1,9 @@
+import { UserAuthService } from './../../../Services/user-auth.service';
 import { CartService } from './../../../Services/cart.service';
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LogoComponent } from '../../logo/logo.component';
 import { CartCountService } from '../../../Services/cart-count.service';
-
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
@@ -16,23 +16,26 @@ export class NavBarComponent {
 
   constructor(
     private cartCountService: CartCountService,
-    private cartService: CartService
+    private cartService: CartService,
+    public UserAuth: UserAuthService
   ) {}
 
   ngOnInit() {
-    this.cartService.getCartCount().subscribe({
-      next: (count) => {
-        this.cartCount = count;
-      },
-    });
-    this.cartCountService.cartUpdateSubject.subscribe(() => {
-      console.log('Received cart update notification.');
-      // Fetch the updated cart count from the API
-      this.cartService.getCartCount().subscribe((count) => {
-        console.log('Fetched cart count:', count);
-
-        this.cartCount = count;
+    if (this.UserAuth.isLoggedIn) {
+      this.cartService.getCartCount().subscribe({
+        next: (count) => {
+          this.cartCount = count;
+        },
       });
-    });
+      this.cartCountService.cartUpdateSubject.subscribe(() => {
+        console.log('Received cart update notification.');
+        // Fetch the updated cart count from the API
+        this.cartService.getCartCount().subscribe((count) => {
+          console.log('Fetched cart count:', count);
+
+          this.cartCount = count;
+        });
+      });
+    }
   }
 }

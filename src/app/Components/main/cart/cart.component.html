@@ -80,7 +80,12 @@
         <hr />
         <p>Sub Total ({{ cartItemsCount }} items) :</p>
         <h3 class="text-muted">{{ cartSubtotal | currency }}</h3>
-        <button class="continue-btn mt-3">
+        <button
+          class="continue-btn mt-3"
+          [routerLink]="['/order']"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           Proceed To Buy <i class="bi bi-chevron-double-right"></i>
         </button>
       </div>

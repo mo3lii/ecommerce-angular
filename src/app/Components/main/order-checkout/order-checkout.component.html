@@ -1,0 +1,131 @@
+<div class="container" style="min-height: 100vh">
+  <div class="row d-flex justify-content-center align-items-start pt-4">
+    <div class="col-7 order-details-container px-5">
+      <div>
+        <h4>Address Details</h4>
+        <div class="d-flex gap-3 my-3">
+          <select
+            [value]=""
+            name="government"
+            class="w-100 form-control form-select"
+            (change)="governmentSelected($event)"
+          >
+            <option value="">Select Governemnt</option>
+            @for (item of LocationList; track $index) {
+            <option [value]="item.id">{{ item.name }}</option>
+            }
+          </select>
+          <select [value]="" name="city" class="w-100 form-control form-select">
+            <option value="">Select City</option>
+
+            @for (item of CityList; track $index) {
+            <option [value]="item.id">{{ item.name }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Address line "
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Phone Number "
+          />
+        </div>
+        <div>
+          <select class="form-select">
+            @for( shippingDate of shippingDates; track $index){
+            <option class="d-flex" [value]="shippingDate.date">
+              <td class="w-100">{{ shippingDate.date }}</td>
+              <td class="w-100">({{ shippingDate.label }})</td>
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="mt-5">
+        <h4>Payment Method</h4>
+        <div class="payment-form mt-3">
+          <form>
+            <div class="form-group">
+              <label for="card-number">Card Number</label>
+              <input
+                type="text"
+                id="card-number"
+                name="card-number"
+                placeholder="Enter your card number"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiry-date">Expiry Date</label>
+                <input
+                  type="text"
+                  id="expiry-date"
+                  name="expiry-date"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  placeholder="CVV"
+                  required
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <button class="chekout-btn mt-3 mb-5">Checkout</button>
+    </div>
+    <div class="col-5 order-sidebar">
+      <div class="order-summary">
+        <h3 class="text-muted fw-bold">Order Summary</h3>
+        <table class="table table-bordered table">
+          <tr>
+            <th>Img</th>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>price</th>
+          </tr>
+
+          @for (prod of cartProdList; track $index) {
+          <tr class="w-100">
+            <td>
+              <div class="img-container">
+                <img [src]="prod.imageURL" alt="" />
+              </div>
+            </td>
+            <td>
+              {{ prod.name | truncatePipe : 23 }}
+            </td>
+            <td>
+              {{ prod.quantity }}
+            </td>
+            <td>
+              {{ prod.priceAfterSale | currency }}
+            </td>
+          </tr>
+
+          }
+          <tr>
+            <td colspan="2">Sub Total</td>
+            <td>15</td>
+            <td>{{ 100 | currency }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

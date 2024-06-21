@@ -11,6 +11,8 @@ import { HomeProductsComponent } from './Components/main/home-products/home-prod
 import { UserLoginComponent } from './Components/main/user-login/user-login.component';
 import { CartComponent } from './Components/main/cart/cart.component';
 import { ProductDetailsComponent } from './Components/main/product-details/product-details.component';
+import { OrderCheckoutComponent } from './Components/main/order-checkout/order-checkout.component';
+import { UserRegisterComponent } from './Components/main/user-register/user-register.component';
 
 export const routes: Routes = [
   {
@@ -18,7 +20,9 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'home', component: HomeProductsComponent },
+      { path: '', component: HomeProductsComponent },
       { path: 'cart', component: CartComponent },
+      { path: 'order', component: OrderCheckoutComponent },
       {
         path: 'product/:id',
         component: ProductDetailsComponent,
@@ -32,6 +36,10 @@ export const routes: Routes = [
   {
     path: 'user/login',
     component: UserLoginComponent,
+  },
+  {
+    path: 'user/register',
+    component: UserRegisterComponent,
   },
   {
     path: 'dashboard',

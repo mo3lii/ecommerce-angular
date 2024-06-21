@@ -3,7 +3,7 @@
   padding: 16px;
   box-shadow: 1px 3px 7px 2px #0000002c;
   width: 320px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.818);
   z-index: 2;
 }
 
@@ -13,6 +13,8 @@
   align-items: center;
   height: 100vh;
   background-image: url("/assets/images/login-background.jpg");
+  background-position: center center;
+  background-size: cover;
   position: relative;
 }
 .overlay {
@@ -20,7 +22,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  opacity: 0.5;
+  opacity: 0.1;
   width: 100%;
   height: 100%;
 }

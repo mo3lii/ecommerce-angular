@@ -2,6 +2,7 @@
   <div class="container d-flex justify-content-between align-items-center">
     <app-logo></app-logo>
     <div class="d-flex align-items-center">
+      @if(UserAuth.isLoggedIn){
       <i class="bi bi-person-circle me-3"></i>
 
       <i class="bi bi-heart me-3"></i>
@@ -21,6 +22,24 @@
         </div>
         <i class="bi bi-bag"></i>
       </div>
+      }@else{
+      <button
+        class="btn sign-in-btn"
+        [routerLink]="['user/login']"
+        [routerLinkActive]="''"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Sign In
+      </button>
+      <button
+        class="btn register-btn ms-2"
+        [routerLink]="['user/register']"
+        [routerLinkActive]="''"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Register
+      </button>
+      }
     </div>
   </div>
 </nav>

@@ -5,11 +5,18 @@ import { Component, OnInit } from '@angular/core';
 import { TruncatePipe } from '../../../Pipes/truncate.pipe';
 import { FormsModule } from '@angular/forms';
 import { CartCountService } from '../../../Services/cart-count.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, TruncatePipe, FormsModule],
+  imports: [
+    CommonModule,
+    TruncatePipe,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })

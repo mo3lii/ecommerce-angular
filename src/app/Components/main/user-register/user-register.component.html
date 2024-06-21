@@ -1,0 +1,202 @@
+<div class="main-container">
+  <div class="p-5 container">
+    <div class="row register-card">
+      <div class="col-6 image-container">
+        <!-- <img src="/assets/images/register-image.jpg" alt="" /> -->
+      </div>
+      <div class="col-6 p-5">
+        <h3 class="mb-3">Create New Account</h3>
+        <form [formGroup]="userGroup" (submit)="register()">
+          <div class="d-flex gap-3 m-0">
+            <div class="my-1 w-50">
+              <label class="mb-1"
+                >First Name <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Your First Name"
+                formControlName="firstName"
+                name="firstName"
+                [ngClass]="{
+                  'input-error': firstName.errors && firstName.touched
+                }"
+              />
+              <div class="error-box">
+                <ng-container *ngIf="firstName.touched"> </ng-container>
+              </div>
+            </div>
+
+            <div class="my-1 w-50">
+              <label class="mb-1"
+                >Last Name <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Your Last Name"
+                formControlName="lastName"
+                name="lastName"
+                [ngClass]="{
+                  'input-error': lastName.errors && lastName.touched
+                }"
+              />
+              <div class="error-box">
+                <ng-container *ngIf="lastName.touched"> </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-1">
+            <label class="mb-1">Email <span class="text-danger">*</span></label>
+            <div class="d-flex">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="example@email.com"
+                formControlName="email"
+                name="email"
+                (keyup)="checkMail()"
+                (focus)="emailFocused()"
+                (blur)="emailBlured()"
+                [ngClass]="{
+                  'input-error':
+                    (email.errors || !isMailAvailable) && email.touched
+                }"
+              />
+              <div *ngIf="email.value?.length" class="spinner-container">
+                <!-- @if(isEmailLoading){
+                <i class="spinner-border text-dark" role="status"></i>
+                }@else {
+
+                <div *ngIf="isMailAvailable && email.valid">
+                  <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <div *ngIf="!isMailAvailable || email.invalid">
+                  <i class="bi bi-x-circle-fill"></i>
+                </div>
+
+                } -->
+                <i
+                  [ngClass]="{
+                    'bi bi-check-circle-fill': isMailAvailable && email.valid,
+                    'bi bi-x-circle-fill': !isMailAvailable || email.invalid
+                  }"
+                ></i>
+              </div>
+            </div>
+
+            <div class="error-box">
+              <ng-container *ngIf="email.touched">
+                <div
+                  *ngIf="email.hasError('email')"
+                  class="form-text text-danger"
+                >
+                  Email is not valid
+                </div>
+                <div *ngIf="!isMailAvailable" class="form-text text-danger">
+                  Email is already used
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="my-1">
+            <label for="password-input" class="mb-1"
+              >Password <span class="text-danger">*</span></label
+            >
+            <div class="d-flex align-items-center">
+              <input
+                [type]="showpassword ? 'text' : 'password'"
+                class="form-control"
+                formControlName="password"
+                id="password-input"
+                [ngClass]="{
+                  'input-error': password.errors && password.touched
+                }"
+                placeholder="Enter your password"
+              /><i
+                class="bi"
+                [ngClass]="showpassword ? 'bi-eye-slash' : 'bi-eye'"
+                (click)="toggleShowPassword()"
+              ></i>
+            </div>
+
+            <div class="error-box">
+              <ng-container *ngIf="password.touched && password.invalid">
+                <div
+                  *ngIf="password.hasError('pattern')"
+                  class="form-text text-danger"
+                >
+                  Your password must meet the following criteria:
+                  <ul>
+                    <li>At least 8 characters long</li>
+                    <li>
+                      Include at least one uppercase & one lowercase letter
+                    </li>
+                    <li>Contain at least one special character</li>
+                  </ul>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="my-1">
+            <label for="confirm-password-input" class="mb-1"
+              >Confirm Password <span class="text-danger">*</span></label
+            >
+            <div class="d-flex align-items-center">
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                class="form-control"
+                formControlName="confirmPassword"
+                id="confirm-password-input"
+                [ngClass]="{
+                  'input-error':
+                    confirmPassword.errors && confirmPassword.touched
+                }"
+                placeholder="Re-Enter your password"
+              /><i
+                class="bi"
+                [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'"
+                (click)="toggleShowConfirmPassword()"
+              ></i>
+            </div>
+
+            <div class="error-box">
+              <ng-container *ngIf="confirmPassword.touched">
+                <div *ngIf="!isPasswordconfirmed" class="form-text text-danger">
+                  Passwords do not match
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="my-3 gap-3 d-flex w-100 justify-content-end">
+            <button
+              class="w-50 signin-btn btn"
+              [routerLink]="['/user/login']"
+              [routerLinkActive]="'fw-bold'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Sign In
+            </button>
+
+            <button
+              class="w-50 register-btn btn"
+              type="submit"
+              [disabled]="
+                !(
+                  this.userGroup.valid &&
+                  this.isMailAvailable &&
+                  this.isPasswordconfirmed
+                )
+              "
+            >
+              Create Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
