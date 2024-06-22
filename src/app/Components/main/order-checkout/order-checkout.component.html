@@ -87,17 +87,17 @@
           </form>
         </div>
       </div>
-      <button class="chekout-btn mt-3 mb-5">Checkout</button>
+      <button class="chekout-btn btn mt-3 mb-5">Checkout</button>
     </div>
     <div class="col-5 order-sidebar">
       <div class="order-summary">
         <h3 class="text-muted fw-bold">Order Summary</h3>
         <table class="table table-bordered table">
-          <tr>
-            <th>Img</th>
+          <tr class="">
+            <th class="p-2">Img</th>
             <th>Title</th>
             <th>Qty</th>
-            <th>price</th>
+            <th>Price</th>
           </tr>
 
           @for (prod of cartProdList; track $index) {
@@ -119,10 +119,10 @@
           </tr>
 
           }
-          <tr>
-            <td colspan="2">Sub Total</td>
-            <td>15</td>
-            <td>{{ 100 | currency }}</td>
+          <tr class="fw-bold bg-light">
+            <td class="p-2" colspan="2">Order Sub Total :</td>
+            <td>{{ cartItemsCount }}</td>
+            <td>{{ cartSubtotal | currency }}</td>
           </tr>
         </table>
       </div>

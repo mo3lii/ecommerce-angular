@@ -4,7 +4,7 @@ import { Injectable, inject } from '@angular/core';
   providedIn: 'root',
 })
 export class ProductRules {
-  nameMaxLength: number = 50;
+  nameMaxLength: number = 70;
   nameMinLength: number = 10;
   descriptionMaxLength: number = 400;
   descriptionMinLength: number = 50;
@@ -14,5 +14,5 @@ export class ProductRules {
   priceMax: number = 99999;
   saleMin: number = 1;
   saleMax: number = 100;
-  productTablePageSize = 8;
+  productTablePageSize = 12;
 }

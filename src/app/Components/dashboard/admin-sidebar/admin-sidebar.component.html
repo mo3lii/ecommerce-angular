@@ -1,4 +1,4 @@
-<H1>Logo</H1>
+<app-logo />
 <hr />
 <ul>
   <li>
@@ -14,7 +14,7 @@
       [routerLink]="['/dashboard/allproducts']"
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
-      ><i class="bi bi-shop-window"></i>All Products</a
+      ><i class="bi bi-shop-window"></i>Products</a
     >
   </li>
   <li>
@@ -23,6 +23,14 @@
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
       ><i class="bi bi-bag-plus"></i>Add Product</a
+    >
+  </li>
+  <li>
+    <a
+      [routerLink]="['/dashboard/brands']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ><i class="bi bi-motherboard"></i>manufacture</a
     >
   </li>
   <li>

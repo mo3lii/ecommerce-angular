@@ -64,7 +64,10 @@ export class AddProductComponent implements OnInit {
     if (this.productId != 0) {
       this.productService.getById(this.productId).subscribe({
         next: (prod) => {
+          console.log('prod from api : ', prod);
           this.product = prod;
+          console.log('product : ', prod);
+
           this.name.setValue(this.product.name);
           this.description.setValue(this.product.description);
           this.categoryId.setValue(this.product.categoryId);
@@ -74,9 +77,9 @@ export class AddProductComponent implements OnInit {
             this.product.sale == null ? null : this.product.sale
           );
           this.stock.setValue(this.product.stock);
-          this.imageSrc = this.product.image;
+          this.imageSrc = this.product.imageURL;
           console.log(this.imageSrc);
-          console.log(this.product.image);
+          console.log(this.product.imageURL);
         },
       });
     }
@@ -135,6 +138,7 @@ export class AddProductComponent implements OnInit {
     return this.formGroup.controls.image;
   }
   PostProduct() {
+    console.log(this.formGroup);
     if (this.formGroup.valid) {
       if (this.productId == 0 && this.selectedFile) {
         this.showImageRequiredError = false;
@@ -234,5 +238,6 @@ export class AddProductComponent implements OnInit {
     this.selectedFile = undefined;
     this.imageSrc = null;
     this.image.setValue('');
+    this.image.markAsTouched();
   }
 }

@@ -17,6 +17,10 @@
   font-weight: bold;
   padding: 6px 8px;
 }
+.chekout-btn:hover {
+  background-color: black;
+  color: white;
+}
 
 .empty-cart {
   text-align: center;

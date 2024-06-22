@@ -6,5 +6,5 @@ export interface IproductEdit {
   price: number;
   sale?: number | null;
   stock: number;
-  image: string;
+  imageURL: string;
 }

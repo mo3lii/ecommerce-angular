@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CategoryDashboardService } from './../../../Services/category-dashboard.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,16 +7,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CategoryRules } from '../../../Rules/Category.Rules';
-import { ICategory } from '../../../models/icategory';
 import { TruncatePipe } from '../../../Pipes/truncate.pipe';
+import { IType } from '../../../models/itype';
+import { TypeDashboardService } from '../../../Services/type-dashboard.service';
+import { CategoryRules } from '../../../Rules/Category.Rules';
+import { BrandsDashboardService } from '../../../Services/brands-dashboard.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-category-table',
+  selector: 'app-brand-table',
   standalone: true,
-  templateUrl: './category-table.component.html',
-  styleUrl: './category-table.component.css',
   imports: [
     ReactiveFormsModule,
     RouterLink,
@@ -25,20 +24,22 @@ import Swal from 'sweetalert2';
     CommonModule,
     TruncatePipe,
   ],
+  templateUrl: './brand-table.component.html',
+  styleUrl: './brand-table.component.css',
 })
-export class CategoryTableComponent implements OnInit {
-  categoryList: ICategory[] = [];
+export class BrandTableComponent {
+  typeList: IType[] = [];
 
-  currentCategory?: ICategory;
+  currentType?: IType;
   constructor(
-    private apiService: CategoryDashboardService,
+    private apiService: BrandsDashboardService,
     public rules: CategoryRules
   ) {}
   ngOnInit(): void {
     this.showAll();
   }
 
-  categoryForm = new FormGroup({
+  typeForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.minLength(this.rules.nameMinLength),
@@ -50,30 +51,32 @@ export class CategoryTableComponent implements OnInit {
       Validators.maxLength(this.rules.descriptionMaxLength),
     ]),
   });
+
   get name() {
-    return this.categoryForm.controls.name;
+    return this.typeForm.controls.name;
   }
   get description() {
-    return this.categoryForm.controls.description;
+    return this.typeForm.controls.description;
   }
-  handleCategory() {
-    if (this.currentCategory) {
-      console.log('right place :', this.currentCategory);
+
+  handleType() {
+    if (this.currentType) {
+      console.log('right place :', this.currentType);
 
       this.apiService
-        .update(this.currentCategory.id, {
+        .update(this.currentType.id, {
           name: this.name.value,
           description: this.description.value,
         })
         .subscribe({
           next: () => {
             this.showAll();
-            this.currentCategory = undefined;
+            this.currentType = undefined;
             this.clearForm();
           },
         });
     } else {
-      if (this.categoryForm.valid) {
+      if (this.typeForm.valid) {
         var newCategory: any = {
           name: this.name.value,
           description: this.description.value,
@@ -89,27 +92,28 @@ export class CategoryTableComponent implements OnInit {
     }
   }
   clearForm() {
-    this.categoryForm.reset();
+    this.typeForm.reset();
   }
   discardChanges() {
-    this.currentCategory = undefined;
+    this.currentType = undefined;
     this.clearForm();
   }
-  onRowSelected(category: ICategory) {
-    this.currentCategory = category;
+  onRowSelected(category: IType) {
+    this.currentType = category;
     this.name.setValue(category.name);
     this.description.setValue(category.description);
   }
   showAll() {
     this.apiService.getAll().subscribe({
-      next: (data) => (this.categoryList = data),
+      next: (data) => (this.typeList = data),
     });
   }
-  onDeleteCategory(category: ICategory) {
-    if (category.productsCount > 0) {
+
+  onDeleteCategory(type: IType) {
+    if (type.productsCount > 0) {
       Swal.fire({
         icon: 'error',
-        text: `You can't delete category with related products !`,
+        text: `You can't delete Brand with related products !`,
       });
     } else {
       Swal.fire({
@@ -122,7 +126,7 @@ export class CategoryTableComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.apiService.delete(category.id).subscribe({
+          this.apiService.delete(type.id).subscribe({
             next: () => this.showAll(),
           });
         }

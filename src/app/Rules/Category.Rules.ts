@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class CategoryRules {
   nameMaxLength: number = 50;
-  nameMinLength: number = 10;
+  nameMinLength: number = 3;
   descriptionMaxLength: number = 400;
-  descriptionMinLength: number = 50;
+  descriptionMinLength: number = 30;
   stockMin: number = 1;
   stockMax: number = 99999;
   priceMin: number = 1;

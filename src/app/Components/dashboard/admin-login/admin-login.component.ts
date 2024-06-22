@@ -8,17 +8,18 @@ import {
 } from '@angular/forms';
 import { AdminAuthService } from '../../../Services/admin-auth.service';
 import { Router } from '@angular/router';
+import { LogoComponent } from '../../logo/logo.component';
 
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, LogoComponent],
   templateUrl: './admin-login.component.html',
   styleUrl: './admin-login.component.css',
 })
 export class AdminLoginComponent {
   constructor(private authService: AdminAuthService, private router: Router) {}
-  showpassword: boolean = true;
+  showpassword: boolean = false;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),

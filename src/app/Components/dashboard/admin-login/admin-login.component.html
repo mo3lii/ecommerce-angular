@@ -1,6 +1,9 @@
 <div class="login-container">
   <form class="login-card" [formGroup]="loginForm" (submit)="login()">
-    <H1 class="text-center w-100">Logo</H1>
+    <div class="text-center w-100 mb-3">
+      <app-logo />
+      <h5>Admins Login</h5>
+    </div>
 
     <div class="my-1">
       <label for="email-input" class="mb-1">Email</label>
@@ -29,6 +32,7 @@
           class="form-control"
           formControlName="password"
           id="password-input"
+          placeholder="Enter Your Password"
           [ngClass]="{ 'input-error': password.errors && password.touched }"
         /><i
           class="bi"

@@ -17,7 +17,7 @@
     class="px-5 py-4 bg-white rounded"
   >
     <div class="my-1">
-      <label class="mb-1">Product Name*</label>
+      <label class="mb-1">Product Name<span class="text-danger">*</span></label>
       <input
         type="text"
         class="form-control"
@@ -41,7 +41,9 @@
       </div>
     </div>
     <div class="my-1">
-      <label class="mb-1">Product Description*</label>
+      <label class="mb-1"
+        >Product Description<span class="text-danger">*</span></label
+      >
       <div class="position-relative">
         <textarea
           type="text"
@@ -94,14 +96,15 @@
     </div>
     <div class="d-flex gap-3">
       <div class="my-1 w-50">
-        <label class="mb-1">Type*</label>
+        <label class="mb-1">Brand<span class="text-danger">*</span></label>
         <select
           class="form-select"
           formControlName="typeId"
           name="typeId"
           [ngClass]="{ 'input-error': typeId.errors && typeId.touched }"
+          [value]="product?.typeId || 0"
         >
-          <option [value]="0">--select Type--</option>
+          <option [value]="0">--select Brand--</option>
           <option *ngFor="let type of types" [value]="type.id">
             {{ type.name }}
           </option>
@@ -118,12 +121,13 @@
         </div>
       </div>
       <div class="my-1 w-50">
-        <label class="mb-1">Category*</label>
+        <label class="mb-1">Category<span class="text-danger">*</span></label>
         <select
           class="form-select"
           formControlName="categoryId"
           name="categoryId"
           [ngClass]="{ 'input-error': categoryId.errors && categoryId.touched }"
+          [value]="product?.categoryId || 0"
         >
           <option [value]="0">--select category--</option>
           <option *ngFor="let cat of categories" [value]="cat.id">
@@ -146,7 +150,9 @@
     </div>
     <div class="d-flex gap-3">
       <div class="my-1 w-50">
-        <label class="mb-1">Product Price*</label>
+        <label class="mb-1"
+          >Product Price<span class="text-danger">*</span></label
+        >
 
         <div class="input-group mb-3">
           <span class="input-group-text">$</span>
@@ -208,7 +214,9 @@
     </div>
 
     <div class="my-1">
-      <label class="mb-1">Product Stock*</label>
+      <label class="mb-1"
+        >Product Stock<span class="text-danger">*</span></label
+      >
       <input
         type="number"
         class="form-control"
@@ -235,7 +243,9 @@
       </div>
     </div>
     <div class="my-1">
-      <label class="mb-1">Product Image*</label>
+      <label class="mb-1"
+        >Product Image<span class="text-danger">*</span></label
+      >
       <input
         type="file"
         class="form-control file"
@@ -243,7 +253,9 @@
         (change)="onImgSelected($event)"
         name="image"
         formControlName="image"
-        [ngClass]="{ 'input-error': image.errors && image.touched }"
+        [ngClass]="{
+          'input-error': (image.errors || !imageSrc) && image.touched
+        }"
       />
       <div class="preview-img" *ngIf="imageSrc">
         <div (click)="deleteSelectedImage()" class="delete-btn">
@@ -253,7 +265,12 @@
       </div>
 
       <div class="error-box">
-        <ng-container *ngIf="showImageRequiredError">
+        <ng-container
+          *ngIf="
+            showImageRequiredError ||
+            ((image.errors || !imageSrc) && image.touched)
+          "
+        >
           <div
             *ngIf="productId == 0 && selectedFile == undefined"
             class="form-text text-danger"

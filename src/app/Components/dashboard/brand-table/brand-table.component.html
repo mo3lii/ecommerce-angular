@@ -2,18 +2,18 @@
   <div class="row">
     <div class="col-12 p-0">
       <form
-        [formGroup]="categoryForm"
-        (submit)="handleCategory()"
+        [formGroup]="typeForm"
+        (submit)="handleType()"
         class="px-5 py-4 bg-white rounded"
       >
         <div class="my-1">
           <label class="mb-1"
-            >Category Name<span class="text-danger">*</span></label
+            >Manufacture Name<span class="text-danger">*</span></label
           >
           <input
             type="text"
             class="form-control"
-            placeholder="Enter Category Name"
+            placeholder="Enter Manufacture Name"
             formControlName="name"
             name="name"
             [ngClass]="{ 'input-error': name.errors && name.touched }"
@@ -24,20 +24,20 @@
                 *ngIf="name.hasError('required')"
                 class="form-text text-danger"
               >
-                Category Name is Required
+                Manufacture Name is Required
               </div>
               <div
                 *ngIf="name.hasError('minlength')"
                 class="form-text text-danger"
               >
-                Category Name must be at least
+                Manufacture Name must be at least
                 {{ rules.nameMinLength }} charachters
               </div>
               <div
                 *ngIf="name.hasError('maxlength')"
                 class="form-text text-danger"
               >
-                Category Name must be at Most
+                Manufacture Name must be at Most
                 {{ rules.nameMaxLength }} charachters
               </div>
             </ng-container>
@@ -45,12 +45,12 @@
         </div>
         <div class="my-1">
           <label class="mb-1"
-            >Category Description<span class="text-danger">*</span></label
+            >Manufacture Description<span class="text-danger">*</span></label
           >
           <textarea
             type="text"
             class="form-control"
-            placeholder="Enter Category Name"
+            placeholder="Enter Manufacture Description"
             formControlName="description"
             name="description"
             rows="4"
@@ -64,20 +64,20 @@
                 *ngIf="description.hasError('required')"
                 class="form-text text-danger"
               >
-                Category Description is Required
+                Manufacture Description is Required
               </div>
               <div
                 *ngIf="description.hasError('minlength')"
                 class="form-text text-danger"
               >
-                Category Description must be at least
+                Manufacture Description must be at least
                 {{ rules.descriptionMinLength }} charachters
               </div>
               <div
                 *ngIf="description.hasError('maxlength')"
                 class="form-text text-danger"
               >
-                Category Description must be at Most
+                Manufacture description must be at Most
                 {{ rules.descriptionMaxLength }} charachters
               </div>
             </ng-container>
@@ -85,19 +85,19 @@
         </div>
         <div class="d-flex justify-content-end gap-1 my-3">
           <a
-            *ngIf="currentCategory"
+            *ngIf="currentType"
             (click)="discardChanges()"
             class="btn btn-danger px-4"
             >Discard</a
           >
           <a
-            *ngIf="!currentCategory"
+            *ngIf="!currentType"
             class="btn btn-danger px-4"
             (click)="clearForm()"
             >Clear</a
           >
           <button type="submit" class="btn btn-success px-4">
-            @if(currentCategory){Save Changes}@else{Add}
+            @if(currentType){Save Changes}@else{Add}
           </button>
         </div>
       </form>
@@ -114,7 +114,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (category of categoryList; track $index) {
+          @for (category of typeList; track $index) {
           <tr class="">
             <td scope="row">{{ category.id }}</td>
             <td class="fw-bold">{{ category.name }}</td>
