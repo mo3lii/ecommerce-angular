@@ -1,29 +1,31 @@
 <div class="p-3 bg-white rounded">
   <div class="page-controller d-flex justify-content-between">
-    <div>
+    <div class="d-flex justify-content-center align-items-center gap-1">
       Page
-      <button
-        (click)="decreasePageNum()"
-        [disabled]="isPrevDisabled()"
-        class="page-change-btn"
-      >
-        &lt;&lt;
-      </button>
-      <input
-        class="current-page-input no-arrows"
-        type="number"
-        [(ngModel)]="currentPageNum"
-        (change)="changePage()"
-        [max]="totalPages"
-        min="1"
-      />
-      <button
-        (click)="increasePageNum()"
-        [disabled]="isNextDisabled()"
-        class="page-change-btn"
-      >
-        &gt;&gt;
-      </button>
+      <div class="d-flex gap-1">
+        <button
+          (click)="decreasePageNum()"
+          [disabled]="isPrevDisabled()"
+          class="btn page-change-btn"
+        >
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+        <input
+          class="current-page-input no-arrows"
+          type="number"
+          [(ngModel)]="currentPageNum"
+          (change)="changePage()"
+          [max]="totalPages"
+          min="1"
+        />
+        <button
+          (click)="increasePageNum()"
+          [disabled]="isNextDisabled()"
+          class="btn page-change-btn"
+        >
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
 
       of {{ totalPages }}
     </div>

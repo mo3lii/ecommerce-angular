@@ -5,34 +5,28 @@
 }
 
 #products-container {
-  padding: 60px 10px 20px;
+  padding: 60px 10px 40px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   width: 100%;
   gap: 20px;
 }
 
-.current-page-input {
-  height: 30px;
-  padding: 0 6px;
-  width: 50px;
-  border: 1px solid rgb(185, 185, 185);
+.page-btn {
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(237, 237, 237);
+  min-width: 38px;
   text-align: center;
+  cursor: pointer;
 }
-.current-page-input:focus {
-  outline: none;
+.current-page-btn {
+  background-color: var(--primary-color);
+  background-color: rgb(86, 86, 86);
+  color: white;
 }
 
-.page-change-btn {
-  color: white;
-  background-color: var(--primary-color);
-  border: none;
-  padding: 0 12px;
-  height: 30px;
-}
-.page-change-btn:disabled {
-  background-color: var(--primary-color-disabled);
-}
 .page-controller {
   width: 100%;
   background-color: white;

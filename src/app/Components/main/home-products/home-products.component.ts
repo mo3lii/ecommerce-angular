@@ -40,6 +40,7 @@ export class HomeProductsComponent implements OnInit {
         this.products = data.products;
         this.currentPageNum = data.currentPage;
         this.totalPages = data.totalPages;
+        this.updatePagesList();
         this.isLoading = false;
       },
       error: () => {
@@ -48,19 +49,42 @@ export class HomeProductsComponent implements OnInit {
       },
     });
   }
-  changePage() {
-    console.log('current page : ', this.currentPageNum);
+  changePage(pageNum: number) {
     if (this.currentPageNum > this.totalPages)
       this.currentPageNum = this.totalPages;
+    this.currentPageNum = pageNum;
     this.getproducts(this.currentPageNum);
   }
+  pagesList: number[] = [];
+  updatePagesList() {
+    this.pagesList = [];
+    if (this.totalPages >= 3) {
+      if (this.currentPageNum == 1) {
+        this.pagesList = [1, 2, 3];
+      } else if (this.currentPageNum == this.totalPages) {
+        this.pagesList = [
+          this.totalPages - 2,
+          this.totalPages - 1,
+          this.totalPages,
+        ];
+      } else {
+        this.pagesList = [
+          this.currentPageNum - 1,
+          this.currentPageNum,
+          this.currentPageNum + 1,
+        ];
+      }
+    } else {
+      for (let i = 1; i <= this.totalPages; i++) {
+        this.pagesList.push(i);
+      }
+    }
+  }
   decreasePageNum() {
-    this.currentPageNum--;
-    this.changePage();
+    this.changePage(this.currentPageNum - 1);
   }
   increasePageNum() {
-    this.currentPageNum++;
-    this.changePage();
+    this.changePage(this.currentPageNum + 1);
   }
   isPrevDisabled() {
     return this.currentPageNum == 1;

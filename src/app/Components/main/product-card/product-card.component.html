@@ -10,8 +10,8 @@
     {{ product?.description | truncatePipe : 62 }}
   </p>
   <div class="tags my-2">
-    <span>{{ product?.type }}</span
-    ><span>{{ product?.category }}</span>
+    <span>{{ product?.category }}</span
+    ><span>{{ product?.type }}</span>
   </div>
   <div class="d-flex align-items-center py-2">
     <p class="product-price me-2" *ngIf="product?.sale">
@@ -24,12 +24,12 @@
       {{ product?.price | currency }}
     </p>
   </div>
-  <div *ngIf="showButtons" class="buttons d-flex gap-1">
+  <div *ngIf="showButtons" class="d-flex gap-1">
     <button
+      class="add-to-cart-btn btn w-100"
       [ngClass]="{
         'added-to-cart': product?.isAddedToCart || isAddedToCart
       }"
-      class="add-to-cart-btn btn w-100"
       (click)="addToCart(product?.id)"
       [disabled]="product?.isAddedToCart || isAddedToCart"
     >
