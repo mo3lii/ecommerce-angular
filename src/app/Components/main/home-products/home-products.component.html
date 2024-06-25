@@ -1,17 +1,41 @@
 <app-slider></app-slider>
+
 <div class="products-section">
+  <div class="d-flex justify-content-center pt-5">
+    <div class="container search-container bg-light">
+      <div class="search">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search..."
+          name=""
+          [(ngModel)]="searchWord"
+          (keydown.enter)="SearchByName()"
+          (input)="SearchByName()"
+        />
+        <button href="#" class="search-icon btn" (click)="SearchByName()">
+          <i class="bi bi-search fs-6"></i>
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="container p-0">
-    @if (isFailed) {
+    @if(IsNoSearchResult){
+    <div class="search-error-box p-5 text-center bg-light">
+      No Search Result ! Try Another Key Words
+    </div>
+    }@else if (isFailed) {
     <div class="error-box">
       <p class="alert alert-danger text-danger py-5 m-5 w-100">
         Error Getting Data, try Again.
       </p>
     </div>
     }@else{
-    <div class="mt-4" id="products-container">
+    <div class="mt-1" id="products-container">
       @for (product of products; track $index) {
       <app-product-card [product]="product"></app-product-card>
       }@empty {
+
       <div class="item">
         <ngx-skeleton-loader
           [theme]="{ height: '400px', width: '100%', 'border-radius': '8px' }"

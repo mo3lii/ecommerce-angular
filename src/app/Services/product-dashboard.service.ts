@@ -34,6 +34,14 @@ export class ProductDashboardService {
       `${this.baseURL}?page=${pageNumber}&pagesize=${this.rules.productTablePageSize}`
     );
   }
+  getSearchPage(
+    pageNumber: number,
+    searchWord: string
+  ): Observable<IproductPage> {
+    return this.client.get<IproductPage>(
+      `${this.baseURL}/search/?SearchWord=${searchWord}&page=${pageNumber}&pagesize=${this.rules.productTablePageSize}`
+    );
+  }
   getById(id: number) {
     return this.client.get<IproductEdit>(`${this.baseURL}/${id}`);
   }

@@ -31,7 +31,11 @@ export class HomeProductsComponent implements OnInit {
     this.products = [];
   }
   ngOnInit(): void {
-    this.getproducts(this.currentPageNum);
+    if (this.searchWord == '') {
+      this.getproducts(this.currentPageNum);
+    } else {
+      this.SearchByName();
+    }
   }
 
   getproducts(pageNumber: number) {
@@ -92,4 +96,36 @@ export class HomeProductsComponent implements OnInit {
   isNextDisabled() {
     return this.currentPageNum == this.totalPages;
   }
+  SearchByName() {
+    this.isFailed = false;
+    this.IsNoSearchResult = false;
+    if (this.searchWord.trim() == '') {
+      this.getproducts(this.currentPageNum);
+    } else {
+      this.apiService
+        .getSearchPage(this.currentPageNum, this.searchWord)
+        .subscribe({
+          next: (data) => {
+            console.log(data);
+            this.products = data.products;
+            if (this.products.length == 0) {
+              this.IsNoSearchResult = true;
+            }
+            this.currentPageNum = data.currentPage;
+            this.totalPages = data.totalPages;
+            this.updatePagesList();
+            this.isLoading = false;
+          },
+          error: () => {
+            this.isLoading = false;
+            this.isFailed = true;
+          },
+        });
+    }
+  }
+  test() {
+    console.log('changed ');
+  }
+  searchWord: string = '';
+  IsNoSearchResult: boolean = false;
 }
