@@ -121,6 +121,7 @@ p {
   font-size: 14px;
   font-weight: bold;
   color: green;
+  padding: 0 0 10px 0;
 }
 .in-stock,
 .out-of-stock {
@@ -155,4 +156,8 @@ p {
 }
 td {
   padding: 3px;
+}
+
+hr {
+  margin: 10px 0;
 }

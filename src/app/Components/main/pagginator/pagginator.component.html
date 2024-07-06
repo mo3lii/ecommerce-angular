@@ -1,31 +1,3 @@
-<app-slider></app-slider>
-
-<div class="products-section">
-  <app-search-bar [callBack]="boundSearchByName"></app-search-bar>
-
-  <div class="container p-0">
-    @if(IsNoSearchResult){
-    <div class="search-error-box p-5 text-center bg-light">
-      No Search Result ! Try Another Key Words
-    </div>
-    }@else if (isFailed) {
-    <div class="error-box">
-      <p class="alert alert-danger text-danger py-5 m-5 w-100">
-        Error Getting Data, try Again.
-      </p>
-    </div>
-    } @else{
-    <div class="mt-1" id="products-container">
-      @if (isLoading){
-      <app-card-loader *ngFor="let i of [].constructor(12); track: $index" />
-      }@else { @for (product of products; track $index) {
-      <app-product-card [product]="product"></app-product-card>
-      }}
-    </div>
-    }
-  </div>
-</div>
-
 <div class="container">
   <div class="page-controller d-flex justify-content-center gap-1">
     <div class="d-flex gap-2 align-items-center">

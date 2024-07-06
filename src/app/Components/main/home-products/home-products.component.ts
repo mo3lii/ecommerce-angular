@@ -1,21 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { IProduct } from '../../../models/iproduct';
 import { ProductDashboardService } from '../../../Services/product-dashboard.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { SliderComponent } from '../slider/slider.component';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CategoryDashboardService } from '../../../Services/category-dashboard.service';
+import { ICategory } from '../../../models/icategory';
+import { TypeDashboardService } from '../../../Services/type-dashboard.service';
+import { IType } from '../../../models/itype';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { CardLoaderComponent } from '../card-loader/card-loader.component';
 @Component({
   selector: 'app-home-products',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ProductCardComponent,
     SliderComponent,
-    NgxSkeletonLoaderModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    SearchBarComponent,
+    CardLoaderComponent,
   ],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css',
@@ -31,14 +42,11 @@ export class HomeProductsComponent implements OnInit {
     this.products = [];
   }
   ngOnInit(): void {
-    if (this.searchWord == '') {
-      this.getproducts(this.currentPageNum);
-    } else {
-      this.SearchByName();
-    }
+    this.getproducts(this.currentPageNum);
   }
 
   getproducts(pageNumber: number) {
+    this.isLoading = true;
     this.apiService.getPage(pageNumber).subscribe({
       next: (data) => {
         this.products = data.products;
@@ -54,6 +62,7 @@ export class HomeProductsComponent implements OnInit {
     });
   }
   changePage(pageNum: number) {
+    this.isLoading = true;
     if (this.currentPageNum > this.totalPages)
       this.currentPageNum = this.totalPages;
     this.currentPageNum = pageNum;
@@ -96,36 +105,36 @@ export class HomeProductsComponent implements OnInit {
   isNextDisabled() {
     return this.currentPageNum == this.totalPages;
   }
-  SearchByName() {
+  SearchByName(searchWord: string) {
     this.isFailed = false;
     this.IsNoSearchResult = false;
-    if (this.searchWord.trim() == '') {
+    this.isLoading = true;
+    if (searchWord.trim() == '') {
       this.getproducts(this.currentPageNum);
     } else {
-      this.apiService
-        .getSearchPage(this.currentPageNum, this.searchWord)
-        .subscribe({
-          next: (data) => {
-            console.log(data);
-            this.products = data.products;
-            if (this.products.length == 0) {
-              this.IsNoSearchResult = true;
-            }
-            this.currentPageNum = data.currentPage;
-            this.totalPages = data.totalPages;
-            this.updatePagesList();
-            this.isLoading = false;
-          },
-          error: () => {
-            this.isLoading = false;
-            this.isFailed = true;
-          },
-        });
+      this.apiService.getSearchPage(this.currentPageNum, searchWord).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.products = data.products;
+          if (this.products.length == 0) {
+            this.IsNoSearchResult = true;
+          }
+          this.currentPageNum = data.currentPage;
+          this.totalPages = data.totalPages;
+          this.updatePagesList();
+          this.isLoading = false;
+        },
+        error: () => {
+          this.isLoading = false;
+          this.isFailed = true;
+        },
+      });
     }
-  }
-  test() {
-    console.log('changed ');
   }
   searchWord: string = '';
   IsNoSearchResult: boolean = false;
+  boundSearchByName = (searchWord: string) => {
+    console.log('callback called');
+    this.SearchByName(searchWord);
+  };
 }

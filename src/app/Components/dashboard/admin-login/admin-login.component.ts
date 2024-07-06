@@ -45,7 +45,7 @@ export class AdminLoginComponent {
           next: (data) => {
             console.log(data);
             localStorage.setItem('admin-token', data.token);
-            this.router.navigate(['/dashboard/home']);
+            this.router.navigate(['/dashboard/allproducts']);
           },
         });
     }

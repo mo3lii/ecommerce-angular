@@ -49,7 +49,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: AdminHomeComponent,
+        component: ProductsTableComponent,
       },
       {
         path: 'allproducts',
